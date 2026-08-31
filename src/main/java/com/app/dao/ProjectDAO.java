@@ -19,44 +19,44 @@ public class ProjectDAO {
    // * ===== OPERAÇÕES BÁSICAS CRUD =====
 
    public List<Project> findAll() throws SQLException {
-       return dao.queryForAll();
+       return this.dao.queryForAll();
    }
 
    public Project findById(int id) throws SQLException {
-       return dao.queryForId(id);
+       return this.dao.queryForId(id);
    }
 
    public void create(Project project) throws SQLException {
-       dao.create(project);
+       this.dao.create(project);
    }
 
    public void update(Project project) throws SQLException {
        project.triggerUpdate();
-       dao.update(project);
+       this.dao.update(project);
    }
 
    public void delete(int id) throws SQLException {
-       dao.deleteById(id);
+       this.dao.deleteById(id);
    }
 
    // * ===== CONSULTAS ESPECÍFICAS =====
   
    public List<Project> findByStatus(Project.ProjectStatus status) throws SQLException {
-       return dao.queryBuilder()
+       return this.dao.queryBuilder()
            .where()
            .eq("status", status)
            .query();
    }
 
    public List<Project> findByName(String name) throws SQLException {
-       return dao.queryBuilder()
+       return this.dao.queryBuilder()
            .where()
            .eq("name", "%" + name + "%")
            .query();
    }
 
    public List<Project> findAllOrderedByCreatedAt() throws SQLException {
-       return dao.queryBuilder()
+       return this.dao.queryBuilder()
            .orderBy("createdAt", false)
            .query();
    }
@@ -64,7 +64,7 @@ public class ProjectDAO {
    // * ===== OPERAÇÕES DE ATUALIZAÇÃO ESPECÍFICAS =====
 
    public void UpdateName(int projectId, String newName) throws SQLException {
-       UpdateBuilder<Project, Integer> updateBuilder = dao.updateBuilder();
+       UpdateBuilder<Project, Integer> updateBuilder = this.dao.updateBuilder();
 
        updateBuilder
            .updateColumnValue("name", newName)
@@ -76,7 +76,7 @@ public class ProjectDAO {
    }
 
    public void UpdateDescription(int projectId, String newDescription) throws SQLException {
-       UpdateBuilder<Project, Integer> updateBuilder = dao.updateBuilder();
+       UpdateBuilder<Project, Integer> updateBuilder = this.dao.updateBuilder();
 
        updateBuilder
            .updateColumnValue("description", newDescription)
@@ -88,7 +88,7 @@ public class ProjectDAO {
    }
 
    public void updateStatus(int projectId, Project.ProjectStatus newStatus) throws SQLException {
-       UpdateBuilder<Project, Integer> updateBuilder = dao.updateBuilder();
+       UpdateBuilder<Project, Integer> updateBuilder = this.dao.updateBuilder();
 
        updateBuilder
            .updateColumnValue("status", newStatus)
@@ -102,11 +102,11 @@ public class ProjectDAO {
    // * ===== VERIFICAÇÕES =====
 
    public boolean exists(int id) throws SQLException {
-       return dao.queryForId(id) != null;
+       return this.dao.queryForId(id) != null;
    }
 
    public boolean existsByName(String name) throws SQLException {
-       List<Project> projects = dao.queryBuilder()
+       List<Project> projects = this.dao.queryBuilder()
            .where()
            .eq("name", name)
            .query();
@@ -117,8 +117,8 @@ public class ProjectDAO {
    // * ===== OPERAÇÕES EM MASSA =====
 
    public void deleteByStatus(Project.ProjectStatus status) throws SQLException {
-       dao.delete(
-           dao.queryBuilder()
+       this.dao.delete(
+           this.dao.queryBuilder()
                .where()
                .eq("status", status)
                .query()
