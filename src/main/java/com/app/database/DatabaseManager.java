@@ -22,8 +22,12 @@ public class DatabaseManager {
    }
   
    public static void close() throws SQLException {
-       if (connectionSource != null) {
-           connectionSource.close();
-       }
+        try {
+            if (connectionSource != null) {
+                connectionSource.close();
+            }
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
    }
 }
