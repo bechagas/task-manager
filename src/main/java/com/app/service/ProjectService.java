@@ -77,7 +77,7 @@ public class ProjectService {
         }
     }
 
-    public void updateProject(int id, Project project) throws SystemException {
+    public void updateProject(int id, Project project) throws SystemException, ResourceNotFoundException {
         this.getProjectById(id);
 
         try {
@@ -87,7 +87,7 @@ public class ProjectService {
         }
     }
 
-    public void deleteProject(int id) throws SystemException {
+    public void deleteProject(int id) throws SystemException, ResourceNotFoundException {
         this.getProjectById(id);
 
         try {
